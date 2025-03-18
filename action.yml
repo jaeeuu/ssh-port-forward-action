@@ -47,9 +47,24 @@ runs:
           }
 
     - name: Validate SSH key
+     before_script:
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$ID_RSA" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - touch ~/.ssh/config
+    - touch ~/.ssh/known_hosts
+    - chmod -R 400 ~/.ssh
       shell: bash
       run: |
-        ssh-keygen -t ed25519 -y -f user_key
+        'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+        eval $(ssh-agent -s)
+        echo "$ID_RSA" | tr -d '\r' | ssh-add -
+        mkdir -p ~/.ssh
+        touch ~/.ssh/config
+        touch ~/.ssh/known_hosts
+        chmod -R 400 ~/.ssh
+        ssh-keygen -y -e -f user_key
 
     - name: Start SSH port forwarding
       shell: bash
