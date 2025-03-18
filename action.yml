@@ -49,7 +49,7 @@ runs:
     - name: Validate SSH key
       shell: bash
       run: |
-        ssh-keygen -y -e -f user_key
+        ssh-keygen -y -f user_key
 
     - name: Start SSH port forwarding
       shell: bash
