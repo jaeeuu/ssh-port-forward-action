@@ -50,7 +50,7 @@ runs:
       shell: bash
       run: |
         eval $(ssh-agent -s)
-        echo "$ID_RSA" | tr -d '\r' | ssh-add -
+        echo "$ID_RSA" | sed 's/\\n/\n/g' | ssh-add -
         mkdir -p ~/.ssh
         touch ~/.ssh/config
         touch ~/.ssh/known_hosts
