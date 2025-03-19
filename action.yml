@@ -49,7 +49,6 @@ runs:
     - name: Validate SSH key
       shell: bash
       run: |
-        'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
         eval $(ssh-agent -s)
         echo "$ID_RSA" | tr -d '\r' | ssh-add -
         mkdir -p ~/.ssh
